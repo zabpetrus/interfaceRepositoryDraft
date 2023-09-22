@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+html, body{
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: crimson;
+}
+
+header{
+    clear: both;
+}
+
+@media (max-width: 1023px) {
+    .sectbi,
+    .secttri,
+    .sidebar{    
+        width: 100%;      
+    }
+}
+
+.sectbi,
+.secttri,
+.sidebar{    
+    height: 100vh;
+    float: left;  
+    word-wrap: break-word;        
+}
+
+
+
+.sidebar{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-wrap: initial;
+}
+
+footer{
+    width: 100vw;
+    text-align: center;
+    background-color: aliceblue;
+    padding: 1.2em;
+    clear: both;
+}
+
+.hidden{
+    display: none;
+}
+
