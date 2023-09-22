@@ -50,7 +50,6 @@ const CppSection2D = (props: Props) => {
         distinctUntilChanged(),
         tap((valorReduxSubject) => {
         // Execute a ação desejada aqui toda vez que o valorRedux mudar
-        console.log(`Valor da fase mudou para: ${valorReduxSubject}`);   
         })
     ); 
     
