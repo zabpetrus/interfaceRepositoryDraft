@@ -32,12 +32,40 @@ header{
 }
 
 
+.accordion-button h6::after {
+   content: url("../public/iconeminus.svg") !important;
+   display: inline-block; /* Garante que o elemento seja exibido como um bloco, para que possamos ajustar sua posição vertical */
+    position: relative; /* Define a posição como relativa para que possamos usar top */
+    top: 5px; 
+    left: 7px;
+} 
+
+
+.accordion-button.collapsed h6::after {
+    content: url("../public/iconeplus.svg") !important;  
+    display: inline-block; /* Garante que o elemento seja exibido como um bloco, para que possamos ajustar sua posição vertical */
+    position: relative; /* Define a posição como relativa para que possamos usar top */
+    top: 2px;
+    left: 7px; 
+}
+
+.accordion-button h6::after,
+.accordion-button.collapsed h6::after{
+    transform: rotate(0deg);
+    transition: transform 0.3 ease;
+}
+
+.accordion-button.collapsed h6::after{
+    transform: rotate(-180deg);
+}
+
 
 .sidebar{
     overflow-y: scroll;
     overflow-x: hidden;
     overflow-wrap: initial;
     background-color: white;
+    margin-top: 0.8em;
 }
 
 footer{

@@ -36,9 +36,23 @@ const CppSection2D = (props: Props) => {
      * a re-renderização do componente quando é modificado. Considerando que a todos os valores são mutáveis,
      * é bom colocar a referÊncia.
      */
-    const phase = useSelector((state: AppState ) => state.phase);
-    const desvio = useSelector((state: AppState ) => state.desvio);
-    const numPhases = useSelector((state: any) => state.numPhases);
+    var phase = useSelector((state: AppState ) => state.phase);
+    var desvio = useSelector((state: AppState ) => state.desvio);
+    var numPhases = useSelector((state: any) => state.numPhases);
+
+    if(phase == null){
+        phase = [{
+            'id': "0",
+            'od': 0,
+            'nome': '',
+            'tipo': '',
+            'dia': 0,
+            'hanger': 0,
+            'sapata': 0,
+            'toc': 0,
+            'mw': 0   
+        }];
+    }
 
     /**
      * Aqui faço o controle do tamanho do componente com o bootstrap. Ele regula os tamanhos das telas
@@ -141,7 +155,8 @@ const CppSection2D = (props: Props) => {
         const floorline = new THREE.Line( floorgeometry, floormaterial );
         objeto.add(floorline);
 
-
+        var dist = 0.6  //largura da parede
+        var pattern = 0.2 //distancia relativa entre as paredes
        
         for( var i = 1; i < numPhases + 1; i++)
         {
@@ -152,18 +167,38 @@ const CppSection2D = (props: Props) => {
 
             if(i === 1){
 
+                //Parede da direita
+                const posicaoAlvo01 = fundo.position.clone();
+                const deslocamento01 = new THREE.Vector3(tamanho * (dist-pattern), -pattern, 0.001);
+                posicaoAlvo01.add(deslocamento01);
+
+                //Parede da esquerda
+                const posicaoAlvo02 = fundo.position.clone();
+                const deslocamento02 = new THREE.Vector3(tamanho * -(dist-pattern), -pattern, 0.001);
+                posicaoAlvo02.add(deslocamento02);
+
+
+
+                const paredealteradaClonedObject1 = paredealterada.clone();
+                paredealteradaClonedObject1.position.copy( posicaoAlvo01 );
+                objeto.add(paredealteradaClonedObject1);
+
+                const paredealteradaClonedObject2 = paredealterada.clone();
+                paredealteradaClonedObject2.position.copy( posicaoAlvo02 );
+                objeto.add(paredealteradaClonedObject2);
+
             }
             
             fundo.position.y = altura - i;
 
             //copiando a posição do cubo a direita
             const posicaoAlvo1 = fundo.position.clone();
-            const deslocamento1 = new THREE.Vector3(tamanho * 0.6, 0, 0);
+            const deslocamento1 = new THREE.Vector3(tamanho * dist, 0, 0);
             posicaoAlvo1.add(deslocamento1);
 
             //copiando a posição do cubo a esquerda
             const posicaoAlvo2 = fundo.position.clone();
-            const deslocamento2 = new THREE.Vector3(tamanho * -0.6, 0, 0);
+            const deslocamento2 = new THREE.Vector3(tamanho * -dist, 0, 0);
             posicaoAlvo2.add(deslocamento2);           
 
             //clonando a parede
@@ -180,7 +215,7 @@ const CppSection2D = (props: Props) => {
             objeto.add(paredeClonedObject2);  
           
             //deslocando o objeto para baixo
-            size -= 0.2;
+            size -= pattern;
           
         }
 

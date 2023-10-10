@@ -2,6 +2,7 @@ import { Accordion, Form } from 'react-bootstrap';
 import { Desvios } from '../../types/_desvios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { toRoman } from '../ConvertToRoman';
 
 interface Props {
     id: string,
@@ -22,7 +23,7 @@ const AppDesvio= (props: Props) => {
     const [desvioData, setDesvioData] = useState({});
 
     const id_eventkey = `${ props.appdef } `;
-    const id_obj = `${props.appdef + 1}`;
+    const id_obj = `${ toRoman( props.appdef + 1) }`;
     const item_id = `${initialFaseData.id}`;
 
     const dispatch = useDispatch()
@@ -66,7 +67,7 @@ const AppDesvio= (props: Props) => {
     return (
 
         <Accordion.Item eventKey={ id_eventkey }>
-        <Accordion.Header>Desvio {id_obj}</Accordion.Header>
+        <Accordion.Header><h6>Desvio {id_obj}</h6></Accordion.Header>
         <Accordion.Body>
             
           <Form>

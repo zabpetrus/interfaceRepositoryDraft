@@ -3,6 +3,7 @@ import { Accordion, Form } from 'react-bootstrap';
 import { Fases } from '../../types/_fases';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux'; 
+import { toRoman } from '../ConvertToRoman';
 
 
 interface Props {
@@ -28,7 +29,7 @@ const AppFase = (props: Props) => {
     const [faseData, setFaseData] = useState({});
 
     const id_eventkey = `${ props.appkey } `;
-    const id_obj = `${props.appkey + 1}`;
+    const id_obj = `${ toRoman( props.appkey + 1) }`;
     const item_id = `${initialFaseData.id}`;
 
 
@@ -107,7 +108,7 @@ const AppFase = (props: Props) => {
     return (
 
         <Accordion.Item eventKey={ id_eventkey }>
-        <Accordion.Header>Fase {id_obj}</Accordion.Header>
+        <Accordion.Header><h6>Fase {id_obj}</h6></Accordion.Header>
         <Accordion.Body>
                         
           <Form>
@@ -128,6 +129,7 @@ const AppFase = (props: Props) => {
                 <Form.Label>Nome</Form.Label>
                 <Form.Select aria-label="Nome">
                 <option>Open this select menu</option>
+                
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -136,11 +138,17 @@ const AppFase = (props: Props) => {
 
             <Form.Group className="mb-3" controlId={ props.id } onChange={handleTipoChange}>
                 <Form.Label>Tipo</Form.Label>
-                <Form.Select aria-label="Tipo" aria-description='tipo de poço direcional'>            
+                <Form.Select aria-label="Tipo" aria-description='tipo de revestimento'>            
                 <option>Escolha um</option>
-                <option value="1">Tipo I</option>
-                <option value="2">Tipo II</option>
-                <option value="3">Tipo III</option>
+                <option value="1">Surface Casing</option> 
+                <option value="2">Intermediate Casing</option>
+                <option value="3">Production Casing</option>
+                <option value="4">Liner</option>
+                <option value="5">Extension Casing</option>
+                <option value="6">Suspension Casing</option>
+                <option value="7">Abandonment Casing</option>
+                <option value="8">Recompletion Casing</option>
+                <option value="9"> Isolation Casing </option>
                 </Form.Select>
             </Form.Group>
 
