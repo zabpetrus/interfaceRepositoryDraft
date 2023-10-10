@@ -10,12 +10,9 @@ html, body{
     box-sizing: border-box;
 }
 
-body{
-    background-color: none;
-}
-
 header{
     clear: both;
+    box-shadow: 7px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 1023px) {

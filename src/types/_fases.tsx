@@ -1,12 +1,12 @@
 export type Fases = {
     'id': string;
-    'od': string;
+    'od': number;
     'nome': string;
     'tipo': string;
-    'dia': string;
-    'hanger': string;
-    'sapata': string;
-    'toc': string;
-    'mw': string;   
+    'dia': number;
+    'hanger': number;
+    'sapata': number;
+    'toc': number;
+    'mw': number;   
 };
   

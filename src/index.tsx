@@ -9,7 +9,14 @@ import AppFooter from './components/AppFooter';
 import StateContext from './contexts/StateContext';
 import { Provider } from 'react-redux';
 import MainContext from './contexts/MainContext';
-/*eslint quotes: ["error", "single", { "allowTemplateLiterals": true }]*/
+
+
+/**
+ * O método createRoot permite criar uma raiz para exibir componentes React dentro de um nó dentro da árvore DOM contida na página index.html *
+ * Toda a aplicação é construida dentro do elemento root, contido no arquivo index.html
+ * Caso seja necessário renderizar separadamente o componente, basta criar outra raiz e chamar o createRoot para este novo root
+ * O provider é responsável para compartilhar os estados e propriedades entre os componentes
+ */
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,38 +25,14 @@ root.render(
   <React.StrictMode>
       <Provider store={MainContext}>        
           <StateContext>      
-              <App />
+              <App />           {/* Componentes AppHeader e AppSidebar */}
+              <CppSection2D />  {/* Componente CppSection2D */}
+              <CppSection3D />  {/* Componente CppSection3D */}
+              <AppFooter />     {/* Componente AppFooter */}
           </StateContext>  
       </Provider> 
   </React.StrictMode>
 );
-
-const root2 = ReactDOM.createRoot(
-  document.getElementById('root2') as HTMLElement
-);
-root2.render(
-    <Provider store={MainContext}>
-      <StateContext>
-        <CppSection2D />
-      </StateContext>
-  </Provider>
-
-);
-
-
-const root3 = ReactDOM.createRoot(
-  document.getElementById('root3') as HTMLElement
-);
-root3.render(  
-<Provider store={MainContext}>
-  <CppSection3D />
-</Provider>);
-
-
-const root4 = ReactDOM.createRoot(
-  document.getElementById('root4') as HTMLElement
-);
-root4.render(<AppFooter />);
 
 
 

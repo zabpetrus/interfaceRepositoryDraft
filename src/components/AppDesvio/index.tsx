@@ -13,10 +13,10 @@ const AppDesvio= (props: Props) => {
 
     const initialFaseData: Desvios = {
         'id': '',
-        'L': '',
-        'radio': '',
-        'teta': '',
-        'azimut': '',
+        'L': 0,
+        'radio': 0,
+        'teta': 0,
+        'azimut': 0,
     };
 
     const [desvioData, setDesvioData] = useState({});

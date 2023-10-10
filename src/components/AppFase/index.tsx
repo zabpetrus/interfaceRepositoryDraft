@@ -15,14 +15,14 @@ const AppFase = (props: Props) => {
 
     const initialFaseData: Fases = {
         'id': "0",
-        'od': "0",
+        'od': 0,
         'nome': '',
         'tipo': '',
-        'dia': '',
-        'hanger': '',
-        'sapata': '',
-        'toc': '',
-        'mw': ''   
+        'dia': 0,
+        'hanger': 0,
+        'sapata': 0,
+        'toc': 0,
+        'mw': 0   
     };
 
     const [faseData, setFaseData] = useState({});
@@ -112,6 +112,7 @@ const AppFase = (props: Props) => {
                         
           <Form>
             <input type='hidden' name={item_id} />
+
 
             <Form.Group className="mb-3" controlId={ props.id }>
                 <Form.Label>OD</Form.Label>
