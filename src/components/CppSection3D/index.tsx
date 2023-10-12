@@ -6,6 +6,7 @@ import * as THREE3D from 'three';
 
 import { OrbitControls } from '../../three/examples/jsm/controls/OrbitControls';
 import { Grade } from '../Grade';
+import AppTextLoader from '../AppTextLoader';
 
 
 interface Props {
@@ -152,9 +153,10 @@ const CppSection3D = (props: Props) => {
         const tubeMesh = new THREE3D.Mesh(tubeGeometry, tubeMaterial);
         scene.add(tubeMesh);
 
-        tubeMesh.position.y = 3;       
+        tubeMesh.position.y = 3;  
 
-
+        AppTextLoader(scene, "Hello World", 0.5, 1, 1);
+       
   
         const aptel = Grade();
         scene.add(aptel) ;
