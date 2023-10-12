@@ -155,8 +155,7 @@ const CppSection3D = (props: Props) => {
 
         tubeMesh.position.y = 3;  
 
-        AppTextLoader(scene, "Hello World", 0.5, 1, 1);
-       
+    
   
         const aptel = Grade();
         scene.add(aptel) ;
