@@ -37,30 +37,41 @@ const initialState: AppState = {
 
 function mainReducer(state = initialState, action: ToggleAction | PayloadAction | any ): AppState {
   switch (action.type) {
+
+    //ativa e desativa para a janela 2D
     case TOGGLE_2D:
     return { ...state, isActive2D: !state.isActive2D };
 
+    //ativa e desativa para a janela 3D
     case TOGGLE_3D:
       return { ...state, isActive3D: !state.isActive3D }; 
-      
+    
+    //aumenta o numero de fases em uma unidade
     case 'INCREMENTAR_FASE':
-       return { ...state, numPhases: state.numPhases + 1 }
+      return { ...state, numPhases: state.numPhases + 1 }
 
+    //aumenta o numero de desvios em uma unidade
     case 'INCREMENTAR_DESVIO':
-        return { ...state, numDetours: state.numDetours + 1 }
+      return { ...state, numDetours: state.numDetours + 1 }
 
+    //Adiciona o objeto fase em uma lista de fases
     case 'INCREMENT_BY_AMOUNT':
-      if (action.payload.id && !state.phase.some(item => item.id === action.payload.id)) {
       return { ...state, phase: [...state.phase, action.payload] };
-      }else{
-        return state
-     };
 
+    //Adiciona o objeto desvio a uma lista de desvios
     case 'INCREMENT_DESVIO_AMOUNT':
-        //return { ...state, phase: state.phase = [...state.phase, action.payload] };  
-        return { ...state, desvio: [...state.desvio, action.payload] };   
+        return { ...state, desvio: [...state.desvio, action.payload] }; 
+   
+    //Incompleta. verifica se tem um valor no array e atualiza (find não funciona)
+    case 'UPDATE_FASE_AMOUNT':
+      return { ...state, desvio: [...state.desvio, action.payload] };
+    
+      //Incompleta. verifica se tem um valor no array e atualiza (find não funciona)
+    case 'UPDATE_DESVIO_AMOUNT':
+      return { ...state, desvio: [...state.desvio, action.payload] };
         
     default:
+
       return state;
   }
 }

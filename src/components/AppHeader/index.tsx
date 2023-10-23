@@ -45,12 +45,12 @@ const AppHeader = (props: Props) => {
                                 <a className="nav-link" href="#">Features</a>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                                     Adicionar Parâmetros
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {/*   <li><a className="dropdown-item" href="#" onClick={incrementCount}>Add Phase</a></li>
-                                    <li><a className="dropdown-item" href="#" onClick={incrementDetourCount}>Add Detour</a></li> */} 
+                            
+                            
                                     <li><a className="dropdown-item" href="#" onClick={handleIncrementoFases}>Add Phase</a></li>
                                     <li><a className="dropdown-item" href="#" onClick={handleIncrementoDesvios}>Add Detour</a></li>
                                     <li><hr className="dropdown-divider" /></li>

@@ -23,8 +23,9 @@ const AppDesvio= (props: Props) => {
     const [desvioData, setDesvioData] = useState({});
 
     const id_eventkey = `${ props.appdef } `;
-    const id_obj = `${ toRoman( props.appdef + 1) }`;
+    const id_obj = props.appdef + 1;
     const item_id = `${initialFaseData.id}`;
+    const nomeDesvio = `Fase_${toRoman( id_obj )}`;
 
     const dispatch = useDispatch()
   
@@ -56,10 +57,20 @@ const AppDesvio= (props: Props) => {
         }));
     }
 
-    const desvioCheckout = (event: any) => {
-       
+    const addElement = () => {
         setDesvioData( prevDesvioData => ( { ...prevDesvioData, id: item_id}))
-        dispatch({ type: 'INCREMENT_DESVIO_AMOUNT', payload: desvioData });
+        dispatch({ type: 'INCREMENT_DESVIO_AMOUNT', payload: desvioData });       
+     }
+
+    const desvioCheckout = (event: any) => {
+        event.preventDefault();
+       if(!desvioData.hasOwnProperty("id")){
+            addElement();  
+       }
+       else{
+            alert("Já existe");
+       }   
+       
      }
  
     
@@ -67,7 +78,7 @@ const AppDesvio= (props: Props) => {
     return (
 
         <Accordion.Item eventKey={ id_eventkey }>
-        <Accordion.Header><h6>Desvio {id_obj}</h6></Accordion.Header>
+        <Accordion.Header><h6>{nomeDesvio}</h6></Accordion.Header>
         <Accordion.Body>
             
           <Form>

@@ -26,8 +26,8 @@ const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:numb
         scene.add( text );
 
     },
-    function ( err: any ) {
-		console.log( 'An error happened: ' + err );	}
+    //Comentando aqui: tratamento de erro será sempre disparado. Verificar o porque
+    // function ( err: any ) { console.log( 'An error happened: ' + err );	} 
     );    
 };
 

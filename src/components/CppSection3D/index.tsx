@@ -6,7 +6,6 @@ import * as THREE3D from 'three';
 
 import { OrbitControls } from '../../three/examples/jsm/controls/OrbitControls';
 import { Grade } from '../Grade';
-import AppTextLoader from '../AppTextLoader';
 
 
 interface Props {
