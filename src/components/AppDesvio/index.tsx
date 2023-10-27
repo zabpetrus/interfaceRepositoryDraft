@@ -20,10 +20,10 @@ const AppDesvio= (props: Props) => {
         'azimut': 0,
     };
 
-    const [desvioData, setDesvioData] = useState({});
-
-    const id_eventkey = `${ props.appdef } `;
     const id_obj = props.appdef + 1;
+    const [desvioData, setDesvioData] = useState({ id: id_obj });
+
+    const id_eventkey = `${ props.appdef } `;   
     const item_id = `${initialFaseData.id}`;
     const nomeDesvio = `Fase_${toRoman( id_obj )}`;
 
@@ -58,19 +58,11 @@ const AppDesvio= (props: Props) => {
     }
 
     const addElement = () => {
-        setDesvioData( prevDesvioData => ( { ...prevDesvioData, id: item_id}))
         dispatch({ type: 'INCREMENT_DESVIO_AMOUNT', payload: desvioData });       
      }
 
     const desvioCheckout = (event: any) => {
-        event.preventDefault();
-       if(!desvioData.hasOwnProperty("id")){
-            addElement();  
-       }
-       else{
-            alert("Já existe");
-       }   
-       
+        addElement();       
      }
  
     
@@ -85,22 +77,22 @@ const AppDesvio= (props: Props) => {
             
             <Form.Group className="mb-3" controlId={ props.id }>
                 <Form.Label>L</Form.Label>
-                <Form.Control type="text" placeholder="L" onChange={handleLChange} />
+                <Form.Control type="text" placeholder="L" onChange={handleLChange} aria-required="true" required />
             </Form.Group>
 
              <Form.Group className="mb-3" controlId={ props.id }>
                 <Form.Label>Radio</Form.Label>
-                <Form.Control type="text" placeholder="Radio" onChange={handleRadioChange} />
+                <Form.Control type="text" placeholder="Radio" onChange={handleRadioChange} aria-required="true" required />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId={ props.id }>
                 <Form.Label>Teta</Form.Label>
-                <Form.Control type="text" placeholder="Teta" onChange={handleTetaChange} />
+                <Form.Control type="text" placeholder="Teta" onChange={handleTetaChange} aria-required="true" required />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId={ props.id }>
                 <Form.Label>Azimut</Form.Label>
-                <Form.Control type="text" placeholder="Azimut" onChange={handleAzimutChange} />
+                <Form.Control type="text" placeholder="Azimut" onChange={handleAzimutChange} aria-required="true" required />
             </Form.Group>   
 
             <button className='btn btn-primary btn-large' type='button' onClick={desvioCheckout}>Atualizar</button>         
