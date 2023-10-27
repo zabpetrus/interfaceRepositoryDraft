@@ -10,6 +10,7 @@ export function Grade() {
     
     var l1 = 100;
     var l2 = l1 / 2 ;
+    const colorText = 0x000000;
 
     const gridX = new THREE.GridHelper(l1, 2, 0x00ff00, 0x808080);
     gridX.position.set(0, -l2, 0); // Posição do GridHelper no eixo X - verde
@@ -43,7 +44,7 @@ export function Grade() {
               height: 1,
             })
 
-            const textMaterialX = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const textMaterialX = new THREE.MeshBasicMaterial({ color: colorText });
             const textMeshX = new THREE.Mesh(textGeometryX, textMaterialX);
 
             const positionX = startPositionX + i / 10 * spacingX;
@@ -61,7 +62,7 @@ export function Grade() {
               height: 1,
             });
         
-            const textMaterialY = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const textMaterialY = new THREE.MeshBasicMaterial({ color: colorText });
             const textMeshY = new THREE.Mesh(textGeometryY, textMaterialY);
 
             const positionY = startPositionY + i / 10 * spacingY;
@@ -81,7 +82,7 @@ export function Grade() {
               height: 1,
             });
         
-            const textMaterialZ = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const textMaterialZ = new THREE.MeshBasicMaterial({ color: colorText });
             const textMeshZ = new THREE.Mesh(textGeometryZ, textMaterialZ);
 
             const positionZ = startPositionZ + i / 10 * spacingZ;

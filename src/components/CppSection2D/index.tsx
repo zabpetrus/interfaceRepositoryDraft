@@ -1,10 +1,8 @@
 import { connect, useSelector } from 'react-redux';
 import { AppState } from '../../contexts/MainContext';
 import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { THREE } from '../ThreeLibCallback';
 import { BehaviorSubject,  distinctUntilChanged } from 'rxjs'
-import { MeshBasicMaterial } from '../../three/build/three.cjs';
-import { FontLoader } from '../../three/examples/jsm/loaders/FontLoader';
 import AppTextLoader from '../AppTextLoader';
 import { blocofundopoco, clonarobjetoeposicaosimetria, labelOD, validaPhase } from '../AppBlocks';
 

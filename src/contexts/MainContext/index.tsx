@@ -35,6 +35,7 @@ const initialState: AppState = {
 };
 
 
+
 function mainReducer(state = initialState, action: ToggleAction | PayloadAction | any ): AppState {
   switch (action.type) {
 
@@ -56,22 +57,19 @@ function mainReducer(state = initialState, action: ToggleAction | PayloadAction 
 
     //Adiciona o objeto fase em uma lista de fases
     case 'INCREMENT_BY_AMOUNT':
-      return { ...state, phase: [...state.phase, action.payload] };
+    const existsInPhase = state.phase.some(item => item.id === action.payload.id);
+    return { ...state, phase: !existsInPhase ? [...state.phase, action.payload] : state.phase.map( item => item.id === action.payload.id ? action.payload : item )};
 
     //Adiciona o objeto desvio a uma lista de desvios
     case 'INCREMENT_DESVIO_AMOUNT':
-        return { ...state, desvio: [...state.desvio, action.payload] }; 
-   
-    //Incompleta. verifica se tem um valor no array e atualiza (find não funciona)
-    case 'UPDATE_FASE_AMOUNT':
-      return { ...state, desvio: [...state.desvio, action.payload] };
-    
+      const existsInDesvio = state.desvio.some(item => item.id === action.payload.id);
+      return { ...state, desvio: !existsInDesvio ? [...state.desvio, action.payload] : state.desvio.map( item => item.id === action.payload.id ? action.payload : item )};   
+  
       //Incompleta. verifica se tem um valor no array e atualiza (find não funciona)
     case 'UPDATE_DESVIO_AMOUNT':
       return { ...state, desvio: [...state.desvio, action.payload] };
         
     default:
-
       return state;
   }
 }

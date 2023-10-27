@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { AppState } from '../../contexts/MainContext';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
-import * as THREE3D from 'three';
-
+import { THREE } from '../ThreeLibCallback';
 import { OrbitControls } from '../../three/examples/jsm/controls/OrbitControls';
 import { Grade } from '../Grade';
+import { Object3D } from '../../three/build/three.cjs';
+import Lined3D from '../Lined3D';
 
 
 interface Props {
@@ -115,17 +116,17 @@ const CppSection3D = (props: Props) => {
         /**
          * Criando a cena no three.js
          */
-        const scene = new THREE3D.Scene();   
+        const scene = new THREE.Scene();   
         sceneRef.current = scene; //Atribuo a cena ao hook de valor mutável
-        sceneRef.current.background = new THREE3D.Color(0xF0F4F2); 
+        sceneRef.current.background = new THREE.Color(0xF0F4F2); 
 
          //Criando uma câmera, posicionando -a e a atribuindo a uma referencia de objeto mutável
-        const camera = new THREE3D.PerspectiveCamera( 75,   container.clientWidth / container.clientHeight, 0.1, 1000 );   
+        const camera = new THREE.PerspectiveCamera( 75,   container.clientWidth / container.clientHeight, 0.1, 1000 );   
         camera.position.z = 5; 
         cameraRef.current = camera; //O objeto camera passa a ser mutavel
         
          //Criando um renderer, determinando seu valor inicial e atribuindo a uma referencia de objeto mutável
-        const renderer = new THREE3D.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         rendererRef.current = renderer;       
 
@@ -139,25 +140,38 @@ const CppSection3D = (props: Props) => {
             if(i === numDetours){
                 j += 1;
             }
-            pontos.push( new THREE3D.Vector3(0, -i, j) );  
+            pontos.push( new THREE.Vector3(0, -i, j) );  
             
                          
         }
 
-        const customCurve = new THREE3D.CatmullRomCurve3(pontos, false, 'chordal');
+        const customCurve = new THREE.CatmullRomCurve3(pontos, false, 'chordal');
 
         // Crie um tubo ao longo da curva (aqui, você pode definir o raio para controlar a espessura)
-        const tubeGeometry = new THREE3D.TubeGeometry(customCurve, 100, 0.1, 8, false);
-        const tubeMaterial = new THREE3D.MeshBasicMaterial({ color: 0x00ff00 });
-        const tubeMesh = new THREE3D.Mesh(tubeGeometry, tubeMaterial);
+        const tubeGeometry = new THREE.TubeGeometry(customCurve, 100, 0.1, 8, false);
+        const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
+        tubeMesh.position.y = 3; 
+
         scene.add(tubeMesh);
 
-        tubeMesh.position.y = 3;  
+
+        const obj = new THREE.Object3D();
+        Lined3D( obj );
+        scene.add(obj);
+
+         
 
     
-  
+        /**
+         * A grade não precisa ser redimensionada em tempo real
+         * Por isso ela não precisa ser constantemente observada e foi mandado para uma função
+         */
         const aptel = Grade();
         scene.add(aptel) ;
+
+        
+        
   
         const flycontrols = new OrbitControls(camera, renderer.domElement );
         flycontrols.update();

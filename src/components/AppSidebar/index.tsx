@@ -2,31 +2,41 @@ import { Accordion } from 'react-bootstrap';
 import AppDesvio from '../AppDesvio';
 import AppFase from '../AppFase';
 import { connect, useSelector } from 'react-redux';
-import React, { useRef } from 'react';
-
-interface Props {
-}
 
 
-const AppSidebar = (props: Props) => {
 
-   const numPhases = useSelector((state: any) => state.numPhases);
-   const numDetours = useSelector( (state: any) => state.numDetours);
 
-    const structure = [];
-    const detourStructure = [];
- 
-    //Iterando e criando o nome de fases
+//Método que cria no sidebar o accordion com os formularios para popular as fases
+const phaseList = ( structure : JSX.Element[], numPhases : number | any ) : void => {
+
     for(let i = 0; i < numPhases; i++){
         const id = `form-${i}`;
         structure.push( <AppFase id={id} key={i} appkey={i} ></AppFase>)
     }
+}
 
-    //Iterando e criando o nome de desvios
+//Método que cria no sidebar o accordion com os formularios para popular os desvios
+const detourList = ( detourStructure : JSX.Element[], numDetours : number | any ) : void => {
     for(let j = 0; j < numDetours; j++){
         const id = `dform-${j}`;
         detourStructure.push( <AppDesvio id={id} key={j} appdef={j}  ></AppDesvio>)
     }
+}
+
+
+const AppSidebar = () => {
+
+   const numPhases = useSelector((state: any) => state.numPhases);
+   const numDetours = useSelector( (state: any) => state.numDetours);
+
+    const structure : JSX.Element[] = [];
+    const detourStructure : JSX.Element[] = [];
+
+     //Iterando e criando o nome de fases
+    phaseList( structure, numPhases );    
+
+    //Iterando e criando o nome de desvios
+    detourList( detourStructure, numDetours );  
 
     return (
 

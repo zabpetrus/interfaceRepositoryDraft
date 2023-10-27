@@ -30,16 +30,17 @@ const AppFase = (props: Props) => {
         'mw': 0   
     };
 
-    
-    const [faseData, setFaseData] = useState({});
+    const id_obj =  props.appkey + 1;
+    const [faseData, setFaseData] = useState({id: id_obj});
 
     const id_eventkey = `${ props.appkey } `;
-    const id_obj =  props.appkey + 1;
+    
     const item_id = `${initialFaseData.id}`;
     const nomeFase = `Fase ${toRoman( id_obj )}`;
 
 
     const dispatch = useDispatch()
+
   
     const handleTipoChange = (event: any) => {
         setFaseData(prevFaseData => ({
@@ -98,25 +99,16 @@ const AppFase = (props: Props) => {
             ...prevFaseData,
              mw : event.target.value
         }));
-    };  
-     // alert( JSON.stringify(faseData)); 
-
-     const addElement = () => {
-        setFaseData( prevFaseData => ( { ...prevFaseData, id: id_obj}))
+    };    
+ 
+    //Adicionar fase
+     const addElement = () => {        
         dispatch({ type: 'INCREMENT_BY_AMOUNT', payload: faseData });        
      }
-    
 
-    const checkout = (event: any) => {
-       
-       event.preventDefault();
-       if(!faseData.hasOwnProperty("id")){
-            addElement();  
-       }
-       else{
-           alert("Já existe");
-       }   
-     
+
+    const checkout = (event: any) => {         
+        addElement();   
     }
 
     return (
@@ -125,7 +117,7 @@ const AppFase = (props: Props) => {
         <Accordion.Header><h6>{nomeFase}</h6></Accordion.Header>
         <Accordion.Body>
                         
-          <Form onSubmit={checkout}>
+          <Form>
             <input type='hidden' name={item_id} />
 
             {/** Diâmetro externo do revestimento  */}
@@ -203,7 +195,7 @@ const AppFase = (props: Props) => {
                 <Form.Control type="text" placeholder="MW" aria-required="true" required />
             </Form.Group>
 
-            <button className='btn btn-primary btn-large' type='submit'>Atualizar</button>
+            <button className='btn btn-primary btn-large' type='button' onClick={checkout}>Atualizar</button>
 
         </Form>
          
