@@ -1,33 +1,36 @@
-import React from 'react';
 import { FontLoader } from '../../three/examples/jsm/loaders/FontLoader';
 import { LineBasicMaterial } from 'three/src/Three';
-import * as THREEFONT from 'three';
+import { THREE } from '../ThreeLibCallback';
 
-interface Props {
-}
 
-const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:number, posx: number, posy: number) => {
+
+const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:number, parente: any, numPhases : number) => {
 
     const loader = new FontLoader();
     loader.load("gentilis_regular.typeface.json", function (font : any) {   
 
         const color = '#000000';
-        const matDark = new LineBasicMaterial( {  color: color,  side: THREEFONT.DoubleSide  } );
+        const matDark = new LineBasicMaterial( {  color: color,  side: THREE.DoubleSide  } );
 
         if(typeof(texto)== 'number'){
             texto = texto.toString();
         }
         const shapes = font.generateShapes( texto, tamanho);
-        const geometry = new THREEFONT.ShapeGeometry( shapes );
+        const geometry = new THREE.ShapeGeometry( shapes );
+       
+        const text = new THREE.Mesh( geometry, matDark );
+
+        var p = numPhases * 0.33;
+       
+        var posicaoDesejada = new THREE.Vector3(0.9, p, 0);
+        posicaoDesejada.add(parente.position);
+        text.position.copy(posicaoDesejada);
+
         geometry.computeBoundingBox();
-        const text = new THREEFONT.Mesh( geometry, matDark );
-        text.position.x = posx;
-        text.position.y = posy;
         scene.add( text );
 
     },
-    //Comentando aqui: tratamento de erro será sempre disparado. Verificar o porque
-    // function ( err: any ) { console.log( 'An error happened: ' + err );	} 
+    
     );    
 };
 

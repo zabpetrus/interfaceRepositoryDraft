@@ -1,0 +1,63 @@
+{
+    "fases": 
+    [
+        {
+            "id": 1,
+            "od": 1,
+            "nome": "FASE_I",
+            "tipo": "produção",
+            "dia": 26,
+            "hanger": 2000,
+            "sapata": 3500,
+            "toc": 3000,
+            "mw": 9
+        },
+        {
+            "id": 2,
+            "od": 4,
+            "nome": "FASE_II",
+            "tipo": "produção",
+            "dia": 26,
+            "hanger": 2500,
+            "sapata": 3500,
+            "toc": 3000,
+            "mw": 9
+        },
+        {
+            "id": 3,
+            "od": 5,
+            "nome": "FASE_III",
+            "tipo": "produção",
+            "dia": 26,
+            "hanger": 2550,
+            "sapata": 3000,
+            "toc": 3500,
+            "mw": 9
+        }
+    ],
+    "desvios":
+    [
+        {
+            "id": 1,
+            "L": 1500,
+            "radio": 50,
+            "teta": 60,
+            "azimut": 85          
+        },
+        {
+            "id": 2,
+            "L": 1600,
+            "radio": 55,
+            "teta": 60,
+            "azimut": 85          
+        },
+        {
+            "id": 3,
+            "L": 1700,
+            "radio": 50,
+            "teta": 60,
+            "azimut": 85          
+        }
+    ]
+
+}

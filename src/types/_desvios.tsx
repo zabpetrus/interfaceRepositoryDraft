@@ -1,8 +1,8 @@
 export type Desvios = {
-    'id': string;
-    'L': number;
-    'radio': number;
-    'teta': number;
-    'azimut': number; 
+    "id": string;
+    "L": number;
+    "radio": number;
+    "teta": number;
+    "azimut": number; 
   };
   

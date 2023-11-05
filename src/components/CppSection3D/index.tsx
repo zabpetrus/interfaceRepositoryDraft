@@ -5,8 +5,8 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { THREE } from '../ThreeLibCallback';
 import { OrbitControls } from '../../three/examples/jsm/controls/OrbitControls';
 import { Grade } from '../Grade';
-import { Object3D } from '../../three/build/three.cjs';
 import Lined3D from '../Lined3D';
+import CurvePoints3D from '../CurvePoints3D';
 
 
 interface Props {
@@ -107,6 +107,7 @@ const CppSection3D = (props: Props) => {
          *  Este trecho verifica se containerRef.current existe (não é nulo). Se não existir, o código interrompe a 
          * execução do useEffect. Isso pode ser usado para evitar que o código continue se o componente estiver prestes a ser desmontado 
          * */
+
         
         if (!containerRef.current) return;
 
@@ -118,7 +119,7 @@ const CppSection3D = (props: Props) => {
          */
         const scene = new THREE.Scene();   
         sceneRef.current = scene; //Atribuo a cena ao hook de valor mutável
-        sceneRef.current.background = new THREE.Color(0xF0F4F2); 
+        sceneRef.current.background = new THREE.Color(0xD3D5D4); 
 
          //Criando uma câmera, posicionando -a e a atribuindo a uma referencia de objeto mutável
         const camera = new THREE.PerspectiveCamera( 75,   container.clientWidth / container.clientHeight, 0.1, 1000 );   
@@ -130,47 +131,22 @@ const CppSection3D = (props: Props) => {
         renderer.setSize(container.clientWidth, container.clientHeight);
         rendererRef.current = renderer;       
 
+        if(numPhases > 0)
+        {           
+            const tubeMesh = CurvePoints3D( numPhases, numDetours );
+            scene.add(tubeMesh);
 
-
-        const pontos = [];
+            /*const obj = new THREE.Object3D();
+            Lined3D( obj );
+            scene.add(obj); */
         
-        var j = 0;
-        for( var i = 0; i < numPhases+1; i++){
-
-            if(i === numDetours){
-                j += 1;
-            }
-            pontos.push( new THREE.Vector3(0, -i, j) );  
-            
-                         
-        }
-
-        const customCurve = new THREE.CatmullRomCurve3(pontos, false, 'chordal');
-
-        // Crie um tubo ao longo da curva (aqui, você pode definir o raio para controlar a espessura)
-        const tubeGeometry = new THREE.TubeGeometry(customCurve, 100, 0.1, 8, false);
-        const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
-        tubeMesh.position.y = 3; 
-
-        scene.add(tubeMesh);
-
-
-        const obj = new THREE.Object3D();
-        Lined3D( obj );
-        scene.add(obj);
-
-         
-
-    
+        } //Fim do if
         /**
          * A grade não precisa ser redimensionada em tempo real
          * Por isso ela não precisa ser constantemente observada e foi mandado para uma função
          */
         const aptel = Grade();
-        scene.add(aptel) ;
-
-        
+        scene.add(aptel) ;     
         
   
         const flycontrols = new OrbitControls(camera, renderer.domElement );
@@ -222,8 +198,14 @@ const CppSection3D = (props: Props) => {
         <div className={'secttri ' + classmate }>
             <p>3D Status: {props.isActive3D ? 'Active' : 'Inactive'}</p>
             <div>
-            <span>Fases:  { JSON.stringify( phase )} </span> 
-            <span>Desvios: { JSON.stringify(desvio)} </span>
+                {/**
+                 * Verificação das variaveis de controle de saida
+                 * 
+                 * <span>Fases:  { JSON.stringify( phase )} </span> 
+                 * <span>Desvios: { JSON.stringify(desvio)} </span>
+                 * 
+                 */}
+            
             <div  ref={containerRef}  style={{ width: '100%', height: '80vh' }}></div>          
 
             </div>

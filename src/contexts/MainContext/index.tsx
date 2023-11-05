@@ -7,14 +7,11 @@ import { Desvios } from '../../types/_desvios';
 const TOGGLE_2D = 'TOGGLE_2D';
 const TOGGLE_3D = 'TOGGLE_3D';
 
-export interface DiaAppState{
-  phase: Fases[];
-  desvio: Desvios[];
-}
 
 export interface AppState {
   isActive2D: boolean;
   isActive3D: boolean;
+  isloaded: boolean;
   phase: Fases[];
   desvio: Desvios[];
   numPhases: number;
@@ -28,11 +25,13 @@ interface ToggleAction {
 const initialState: AppState = {
   isActive2D: true,
   isActive3D: true,
+  isloaded: false,
   phase: [],
   desvio: [],
   numPhases: 3,
-  numDetours: 3
+  numDetours: 0
 };
+
 
 
 
@@ -46,29 +45,54 @@ function mainReducer(state = initialState, action: ToggleAction | PayloadAction 
     //ativa e desativa para a janela 3D
     case TOGGLE_3D:
       return { ...state, isActive3D: !state.isActive3D }; 
+
+    case 'LOAD_FILE_STATS':
+      return { ...state, isloaded: !state.isloaded }; 
     
     //aumenta o numero de fases em uma unidade
     case 'INCREMENTAR_FASE':
-      return { ...state, numPhases: state.numPhases + 1 }
+      const novoValorphase = state.numPhases + 1;
+      const novoNumPhases = novoValorphase <= 8 ? novoValorphase : 8;
+      return { ...state, numPhases: novoNumPhases }
 
     //aumenta o numero de desvios em uma unidade
     case 'INCREMENTAR_DESVIO':
-      return { ...state, numDetours: state.numDetours + 1 }
+      const novoValordesvio = state.numDetours + 1;
+      const novoNumDetours = novoValordesvio <= 8 ? novoValordesvio : 8; // Limitando a 8
+      return { ...state, numDetours: novoNumDetours };
 
     //Adiciona o objeto fase em uma lista de fases
     case 'INCREMENT_BY_AMOUNT':
+      if (state.phase.length >= 8) {
+        return state; // Retorna o estado atual sem fazer alterações
+      }
     const existsInPhase = state.phase.some(item => item.id === action.payload.id);
     return { ...state, phase: !existsInPhase ? [...state.phase, action.payload] : state.phase.map( item => item.id === action.payload.id ? action.payload : item )};
 
     //Adiciona o objeto desvio a uma lista de desvios
     case 'INCREMENT_DESVIO_AMOUNT':
+      if (state.desvio.length >= 8) { 
+        return state; // Retorna o estado atual sem fazer alterações
+      }
       const existsInDesvio = state.desvio.some(item => item.id === action.payload.id);
       return { ...state, desvio: !existsInDesvio ? [...state.desvio, action.payload] : state.desvio.map( item => item.id === action.payload.id ? action.payload : item )};   
   
-      //Incompleta. verifica se tem um valor no array e atualiza (find não funciona)
-    case 'UPDATE_DESVIO_AMOUNT':
-      return { ...state, desvio: [...state.desvio, action.payload] };
-        
+      //Carrega as fases de um arquivo json 
+    case 'LOAD_DATA_FASE':      
+      return { ...state, phase: action.payload };
+
+      //carrega os devios de um arquivo json
+    case 'LOAD_DATA_DESVIO':
+        return { ...state, desvio: action.payload };
+    
+    //carrega o numero de fases manualmente ou da leitura de um objeto fases
+    case 'FASE_NUMPHASES':
+      return { ...state, numPhases: (typeof(action.payload) === 'number')? action.payload : action.payload.length };  
+
+    //carrega o numero de desvios manualmente ou da leitura de um objeto fases
+    case 'DETOUR_NUMDETOURS':
+        return { ...state, numDetours: (typeof(action.payload) === 'number')? action.payload : action.payload.length };            
+
     default:
       return state;
   }
@@ -85,3 +109,5 @@ export const incrementarDesvios = () => ({
 
 const store = configureStore({ reducer: mainReducer } );
 export default store;
+
+

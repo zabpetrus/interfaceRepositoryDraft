@@ -21,10 +21,12 @@ const AppDesvio= (props: Props) => {
     };
 
     const id_obj = props.appdef + 1;
+
+
     const [desvioData, setDesvioData] = useState({ id: id_obj });
 
     const id_eventkey = `${ props.appdef } `;   
-    const item_id = `${initialFaseData.id}`;
+    //const item_id = `${initialFaseData.id}`;
     const nomeDesvio = `Fase_${toRoman( id_obj )}`;
 
     const dispatch = useDispatch()

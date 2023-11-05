@@ -1,16 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { handleLoadFile } from '../../api/connect';
 import { incrementarDesvios, incrementarFase } from '../../contexts/MainContext';
 import { connect, useDispatch } from 'react-redux';
+
 
 interface Props {
     toggle2D: () => void;
     toggle3D: () => void;
+    toogleLoad : () => void;
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
     toggle2D: () => dispatch({ type: 'TOGGLE_2D' }),
-    toggle3D: () => dispatch({ type: 'TOGGLE_3D' })
+    toggle3D: () => dispatch({ type: 'TOGGLE_3D' }),
+    toogleLoad: () => dispatch({ type: 'LOAD_FILE_STATS' }),
 });
+
+
   
 
 const AppHeader = (props: Props) => {
@@ -19,12 +25,15 @@ const AppHeader = (props: Props) => {
     const dispatch = useDispatch();
 
     const handleIncrementoFases = (event: any) => {
-        dispatch( incrementarFase() );
-    };
+        dispatch( incrementarFase() );    }
 
     const handleIncrementoDesvios = (event: any) => {
-        dispatch( incrementarDesvios() );
-    }    
+        dispatch( incrementarDesvios() );   }  
+        
+    const handleUploadFile = (event: any) =>{
+        handleLoadFile(event);
+        props.toogleLoad();
+    }
     
   
     return (
@@ -37,12 +46,20 @@ const AppHeader = (props: Props) => {
                             <span className="navbar-toggler-icon" ></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarText">
+
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
+
                                 <a className="nav-link active" aria-current="page" href="#">Home</a>
+
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Features</a>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="arquivo" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Features</a>
+                                <ul className="dropdown-menu" aria-labelledby="arquivo">
+                            
+                                    <li><a className="dropdown-item" href="#">Nova visualização</a></li>
+                                    <li><a className="dropdown-item" href="#" onClick={handleUploadFile}>Abrir Arquivo</a></li>
+                                </ul>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
