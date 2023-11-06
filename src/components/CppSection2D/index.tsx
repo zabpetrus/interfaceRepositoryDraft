@@ -3,7 +3,7 @@ import { AppState } from '../../contexts/MainContext';
 import { useEffect, useRef } from 'react';
 import { THREE } from '../ThreeLibCallback';
 import { BehaviorSubject,  distinctUntilChanged } from 'rxjs'
-import { createLineEarth, validaPhase, labelOD, blocofundopoco, cloneSimetricObject, lastFieldBuilder, observeValue } from '../AppBlocks';
+import { createLineEarth, validaPhase, labelOD, blocofundopoco, cloneSimetricObject, lastFieldBuilder } from '../AppBlocks';
 import AppTextLoader from '../AppTextLoader';
 
 interface Props {
@@ -173,17 +173,10 @@ const CppSection2D = (props: Props) => {
      //fator de redução para a escala no desenho
      const pattern = 0.2 
      
-     //O posicionamento inicial relativo do label no eixo y
-     var od_label_ypos = 0.55; 
- 
-     //Deslocamento retroativo do label
-     var label_ypos_desl = 1;
-     
-     //fator de ampliação do texto
+         //fator de ampliação do texto
      const od_label_size = 0.1;
  
-     //posicionamento em relação a altura da fase
-     const od_label_xpos = 0.9;
+
  
      //largura da ponta da broca
      const drill_tip_width = 0.3;
@@ -238,10 +231,20 @@ const CppSection2D = (props: Props) => {
              
          //Desenho do fundo
          const fundo = blocofundopoco(size, 1, 0);
+
+
+        const addSoma = new BehaviorSubject(label_od);
+
+            // Subscreva-se ao BehaviorSubject para monitorar as mudanças no valor.
+        addSoma.subscribe((valor) => {
+            AppTextLoader(scene, valor, od_label_size, fundo , numPhases);
+         });
+
+         addSoma.next(label_od);
  
  
          //Inserindo o label no poço
-          AppTextLoader(scene, label_od, od_label_size, fundo , numPhases);
+         //AppTextLoader(scene, label_od, od_label_size, fundo , numPhases);
  
  
          //Parede cimentada inserida quando i = 1
@@ -372,8 +375,12 @@ const CppSection2D = (props: Props) => {
     <div className={'sectbi '+ classmate }>     
         <p>2D Status: {props.isActive2D ? 'Active' : 'Inactive'}</p>
         <div>
-          <span>Fases:  { JSON.stringify( phase )} </span> 
+        {/**   
+         *  <span>Fases:  { JSON.stringify( phase )} </span> 
           <span>Desvios: { JSON.stringify(desvio)} </span>
+         * 
+         *  */ }
+         
           <div  ref={containerRef}  style={{ width: '100%', height: '80vh' }}></div>          
           
         </div>

@@ -2,15 +2,20 @@ import { THREE} from '../ThreeLibCallback';
 
 
 const CurvePoints3D = (numPhases : number, numDetours: number) => {
-    const pontos = [];
+    const pontos: THREE.Vector3[] | undefined = [];
             
     var j = 0;
     for( var i = 0; i < numPhases+1; i++){
-
+    
         if(i === numDetours){
             j += 1;
         }
-        pontos.push( new THREE.Vector3(0, -i, j) );    
+
+       // pontos.push( new THREE.Vector3(0, -i, j) );
+       var m = numPhases - i;
+       pontos.push( new THREE.Vector3(0, -m, j) );
+       
+
     }
 
     const customCurve = new THREE.CatmullRomCurve3(pontos, false, 'chordal');
