@@ -27,3 +27,7 @@ npm install resize-observer-polyfill --save
 npm install eslint-plugin-html --save-dev
 
 npm install rxjs
+
+npm install --save @types/babel__template
+
+

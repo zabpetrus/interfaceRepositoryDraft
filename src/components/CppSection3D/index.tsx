@@ -5,7 +5,6 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { THREE } from '../ThreeLibCallback';
 import { OrbitControls } from '../../three/examples/jsm/controls/OrbitControls';
 import { Grade } from '../Grade';
-import Lined3D from '../Lined3D';
 import CurvePoints3D from '../CurvePoints3D';
 
 

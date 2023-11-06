@@ -1,5 +1,4 @@
 import { Accordion, Form } from 'react-bootstrap';
-import { Desvios } from '../../types/_desvios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toRoman } from '../ConvertToRoman';
@@ -12,16 +11,7 @@ interface Props {
 
 const AppDesvio= (props: Props) => {
 
-    const initialFaseData: Desvios = {
-        'id': '',
-        'L': 0,
-        'radio': 0,
-        'teta': 0,
-        'azimut': 0,
-    };
-
-    const id_obj = props.appdef + 1;
-
+      const id_obj = props.appdef + 1;
 
     const [desvioData, setDesvioData] = useState({ id: id_obj });
 

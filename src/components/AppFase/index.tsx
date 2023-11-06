@@ -5,7 +5,6 @@ import { connect, useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux'; 
 import { toRoman } from '../ConvertToRoman';
 import { AppState } from '../../contexts/MainContext';
-import { useStateContext } from '../../contexts/StateContext';
 
 
 interface Props {

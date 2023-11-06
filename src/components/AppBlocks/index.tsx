@@ -1,4 +1,3 @@
-import React from 'react';
 import { THREE } from '../ThreeLibCallback';
 import { Fases } from '../../types/_fases';
 import { Observable } from 'rxjs';
