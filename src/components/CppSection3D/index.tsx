@@ -85,6 +85,8 @@ const CppSection3D = (props: Props) => {
     const valorObservable = valorReduxSubject.pipe(
         distinctUntilChanged(),  
     ); 
+
+    
     
     /**
      * O useeffect permite a criação de efeitos colaterais no React. Como sabemos, o React trabalha com constantes e, quando precisamos
@@ -93,14 +95,7 @@ const CppSection3D = (props: Props) => {
      */
     useEffect(() => {
         
-        /**
-         * A assinatura aparentemente vazia (variavel subscription) é usada para acionar o redesenho do componente em resposta 
-         * a mudanças no estado observado (resize e outros), mesmo que a lógica específica de manipulação dessas mudanças possa estar em 
-         * outro lugar do código (por exemplo, no código omitido em outros componentes). Isso é uma técnica válida para manter a sincronização entre o 
-         * estado e a representação na tela em aplicações React/Redux.
-         */
-        const subscription = valorObservable.subscribe();
-        
+              
 
         /**
          *  Este trecho verifica se containerRef.current existe (não é nulo). Se não existir, o código interrompe a 
@@ -130,16 +125,21 @@ const CppSection3D = (props: Props) => {
         renderer.setSize(container.clientWidth, container.clientHeight);
         rendererRef.current = renderer;       
 
-        if(numPhases > 0)
-        {           
-            const tubeMesh = CurvePoints3D( numPhases, numDetours );
-            scene.add(tubeMesh);
 
-            /*const obj = new THREE.Object3D();
-            Lined3D( obj );
-            scene.add(obj); */
-        
-        } //Fim do if
+        //Considerando que numPhases inicial é 3
+
+         /**
+         * A assinatura aparentemente vazia (variavel subscription) é usada para acionar o redesenho do componente em resposta 
+         * a mudanças no estado observado (resize e outros), mesmo que a lógica específica de manipulação dessas mudanças possa estar em 
+         * outro lugar do código (por exemplo, no código omitido em outros componentes). Isso é uma técnica válida para manter a sincronização entre o 
+         * estado e a representação na tela em aplicações React/Redux.
+         */
+         const subscription = valorObservable.subscribe( phase => {
+            const tubeMesh = CurvePoints3D( numPhases, numDetours , phase, desvio);
+            scene.add(tubeMesh);
+         });        
+
+
         /**
          * A grade não precisa ser redimensionada em tempo real
          * Por isso ela não precisa ser constantemente observada e foi mandado para uma função
@@ -195,9 +195,11 @@ const CppSection3D = (props: Props) => {
 
     return (
         <div className={'secttri ' + classmate }>
-            <p>3D Status: {props.isActive3D ? 'Active' : 'Inactive'}</p>
+           
             <div>
                 {/**
+                 * 
+                 *  <p>3D Status: {props.isActive3D ? 'Active' : 'Inactive'}</p>
                  * Verificação das variaveis de controle de saida
                  * 
                  * <span>Fases:  { JSON.stringify( phase )} </span> 

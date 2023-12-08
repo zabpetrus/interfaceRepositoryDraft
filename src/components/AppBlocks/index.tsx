@@ -1,6 +1,8 @@
 import { THREE } from '../ThreeLibCallback';
 import { Fases } from '../../types/_fases';
 import { Observable } from 'rxjs';
+import AppDesvio from '../AppDesvio';
+import AppFase from '../AppFase';
 
 
 /**
@@ -114,7 +116,40 @@ export function labelOD( phase_od_value: number )
         case 10:
             return "30\" casing";
         default:
-            return "---";            
+            return "";            
+        
+    }
+
+}
+
+
+
+export function setODValue( phase_od_value: number )
+{
+    switch(phase_od_value){
+        case 1:
+            return 5.5;
+        case 2:
+            return 7;
+        case 3:
+            return 9.625;
+        case 4:
+            return 10.75;
+        case 5:
+            return 13.375;
+        case 6:
+            return 16;
+        case 7:
+            return 18.625;
+        case 8:
+            return 20;
+        case 9:
+            return 22;
+        case 10:
+            return 30;
+
+        default:
+            return 0.1;            
         
     }
 }
@@ -190,5 +225,113 @@ export function observeValue( valueToObserve : any) {
       });
     };
   }
+
+  /**
+   * Dado um vetor inicial vazio do tipo Phases, populamos -o
+   * @param initial 
+   */
+
+  export const populatePhaseList = (numPhases : number) => {
+
+    const initial: Fases[] = [];
+    for(let i = 1; i < numPhases + 1; i++){
+  
+      const phasedata : Fases = {
+          id: i.toString(),
+          od: 0,
+          nome:  '',
+          tipo: '',
+          dia:  0,
+          hanger: 0,
+          sapata:  0,
+          toc: 0,
+          mw: 0
+      };
+      initial.push(phasedata);     
+     } 
+
+     return initial;
+
+  }
+
+
+
+
+//Método que cria no sidebar o accordion com os formularios para popular as fases
+export const phaseList = ( structure : JSX.Element[], numPhases : number | any, listPhases: Fases[] ) : void => {
+
+  if (numPhases > 0){ 
+
+
+      for(let i = 0; i < numPhases; i++){
+          const id = `form-${i}`;            
+       
+          const phasedata : Fases = {
+              id: listPhases[i]?.id || i.toString(),
+              od: listPhases[i]?.od || 0,
+              nome:  listPhases[i]?.nome || '',
+              tipo: listPhases[i]?.tipo || '',
+              dia:  listPhases[i]?.dia || 0,
+              hanger: listPhases[i]?.hanger || 0,
+              sapata:  listPhases[i]?.sapata || 0,
+              toc: listPhases[i]?.toc || 0,
+              mw: listPhases[i]?.mw || 0
+          };
+          structure.push( <AppFase id={id} key={i} appkey={i} phaseData={phasedata} ></AppFase>)
+      } 
+  }
+}
+
+//Método que cria no sidebar o accordion com os formularios para popular os desvios
+export const detourList = ( detourStructure : JSX.Element[], numDetours : number | any ) : void => {
+
+  if(numDetours > 0){
+       for(let j = 0; j < numDetours; j++){
+          const id = `dform-${j}`;
+          detourStructure.push( <AppDesvio id={id} key={j} appdef={j}  ></AppDesvio>)
+      }
+  }
+}
+
+
+const circles = (circleRadius: number) => {
+  var shape = new THREE.Shape();
+  shape.moveTo( circleRadius, 0 );
+  shape.absarc( 0, 0, circleRadius, 0, 2 * Math.PI, false );
+  return shape;
+}
+
+
+const createnewObject = ( numPhases: number ) => {
+
+  const dots = [];
+  for(var i = 0; i < numPhases; i++){ 
+      dots.push( new THREE.Vector3( 0, -i, 0 ) );
+  }
+
+  const randomSpline = new THREE.CatmullRomCurve3( dots );
+
+  const extrudeSettings = { 
+      steps: 200,
+      bevelEnabled: false,
+  extrudePath: randomSpline
+  };
+
+  const circleShape = circles( 0.1 );
+  const circleshapegeometry = new THREE.ExtrudeGeometry( circleShape, extrudeSettings );
+  const material1 = new THREE.MeshLambertMaterial( { color: 0xb00000, wireframe: false } );
+  const mesh = new THREE.Mesh( circleshapegeometry, material1 );
+  return mesh;
+
+
+}
+
+
+
+
+
+
+
+
 
 

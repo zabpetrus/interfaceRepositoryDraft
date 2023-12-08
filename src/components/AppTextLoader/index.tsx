@@ -1,6 +1,7 @@
 import { FontLoader } from '../../three/examples/jsm/loaders/FontLoader';
 import { LineBasicMaterial } from 'three/src/Three';
 import { THREE } from '../ThreeLibCallback';
+import { Observable } from 'rxjs';
 
 
 
@@ -15,6 +16,8 @@ const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:numb
         if(typeof(texto)== 'number'){
             texto = texto.toString();
         }
+
+        
         const shapes = font.generateShapes( texto, tamanho);
         const geometry = new THREE.ShapeGeometry( shapes );
        
@@ -22,12 +25,13 @@ const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:numb
 
         var p = numPhases * 0.33;
        
-        var posicaoDesejada = new THREE.Vector3(0.9, p, 0);
+        var posicaoDesejada = new THREE.Vector3(1.3, p, 0);
         posicaoDesejada.add(parente.position);
         text.position.copy(posicaoDesejada);
 
         geometry.computeBoundingBox();
         scene.add( text );
+
 
     },
     

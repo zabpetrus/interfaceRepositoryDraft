@@ -2,6 +2,7 @@
 import { PayloadAction, configureStore } from '@reduxjs/toolkit';
 import { Fases } from '../../types/_fases';
 import { Desvios } from '../../types/_desvios';
+import { populatePhaseList } from '../../components/AppBlocks';
 
 
 const TOGGLE_2D = 'TOGGLE_2D';
@@ -22,6 +23,8 @@ interface ToggleAction {
   type: typeof TOGGLE_2D | typeof TOGGLE_3D;
 }
 
+const seev = populatePhaseList( 3 );
+
 const initialState: AppState = {
   isActive2D: true,
   isActive3D: true,
@@ -31,6 +34,7 @@ const initialState: AppState = {
   numPhases: 3,
   numDetours: 0
 };
+
 
 
 
@@ -67,7 +71,11 @@ function mainReducer(state = initialState, action: ToggleAction | PayloadAction 
         return state; // Retorna o estado atual sem fazer alterações
       }
     const existsInPhase = state.phase.some(item => item.id === action.payload.id);
-    return { ...state, phase: !existsInPhase ? [...state.phase, action.payload] : state.phase.map( item => item.id === action.payload.id ? action.payload : item )};
+    const appendInPhase = [...state.phase, action.payload];
+
+    const substituicao = state.phase.map( item => (item.id === action.payload.id) ? action.payload : item ) 
+    const updatedPhase = !existsInPhase ? appendInPhase : substituicao;
+    return { ...state, phase: updatedPhase };
 
     //Adiciona o objeto desvio a uma lista de desvios
     case 'INCREMENT_DESVIO_AMOUNT':

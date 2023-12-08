@@ -15,6 +15,7 @@ interface Props {
 
 const mapStateToProps = (state: any) => ({
     isloaded: state.isloaded,
+    currentState: state.phase
 });
 
 
@@ -47,7 +48,10 @@ const AppFase = (props: Props) => {
 
 
     const dispatch = useDispatch();
+
+
     var isloaded = useSelector((state: AppState ) => state?.isloaded);
+    const currentState = useSelector((state: AppState) => state?.phase);
  
     const validaUpdateData: boolean = isloaded && (props.phaseData !== undefined);   
   
@@ -112,8 +116,10 @@ const AppFase = (props: Props) => {
     };    
    
 
-    const checkout = (event: any) => {         
+    const checkout = (event: any) => {                    
         dispatch({ type: 'INCREMENT_BY_AMOUNT', payload: faseData });
+        console.log( "ID DE FASE "+ faseData.id );  
+        console.log( "FASE "+ JSON.stringify(faseData) );        
     }
 
     return (
@@ -148,7 +154,7 @@ const AppFase = (props: Props) => {
                 <Form.Label>Nome</Form.Label>
                 <Form.Select aria-label="Nome" aria-required='true' required defaultValue={validaUpdateData ? 1 : 0}>
                 <option value="0">Open this select menu</option>                
-                <option value="1">{nomeFase}</option>
+                <option value={id_obj}>{nomeFase}</option>
                 
                 </Form.Select>
             </Form.Group>

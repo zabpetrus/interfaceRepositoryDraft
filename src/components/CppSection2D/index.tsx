@@ -2,9 +2,12 @@ import { connect, useSelector } from 'react-redux';
 import { AppState } from '../../contexts/MainContext';
 import { useEffect, useRef } from 'react';
 import { THREE } from '../ThreeLibCallback';
-import { BehaviorSubject,  distinctUntilChanged } from 'rxjs'
+import { BehaviorSubject,  Observable,  Subject,  distinctUntilChanged, interval } from 'rxjs'
 import { createLineEarth, validaPhase, labelOD, blocofundopoco, cloneSimetricObject, lastFieldBuilder } from '../AppBlocks';
 import AppTextLoader from '../AppTextLoader';
+import { LineBasicMaterial } from 'three';
+import { FontLoader } from '../../three/examples/jsm/loaders/FontLoader';
+import { equal } from './../../three/examples/jsm/nodes/math/OperatorNode';
 
 interface Props {
     isActive2D: boolean;
@@ -118,7 +121,7 @@ const CppSection2D = (props: Props) => {
     const camera = new THREE.PerspectiveCamera( 75,   container.clientWidth / container.clientHeight, 0.1, 1000 );
 
     //Afastamento da camera em cinco pontos
-    camera.position.z = 5;
+    camera.position.z = 7;
 
     //A camera está sendo atribuindo a uma referência de objeto mutável
     cameraRef.current = camera;
@@ -147,7 +150,7 @@ const CppSection2D = (props: Props) => {
      var altura = 0.8;
      
      //largura do poço... Não tenho certeza da terminologia correta, por isso coloquei este nome.
-     var size = 1;
+     var size = 1.7;
  
      //A posição da linha do terra na cena no eixo y
      var alt_linha_terra = 0.28;  
@@ -218,34 +221,34 @@ const CppSection2D = (props: Props) => {
       
      //inicializando o contador
      var i: number = 1;
-     
+     const loader = new FontLoader();
+  
+
      //Adicionando fases.
      for(i; i < numPhases; i++)
      {
          //O desenho da  da fase
          var tamanho = size;
          
-         var od = validaPhase(phase, i-1, 'od');
-         const label_od: string = labelOD( od );                     
- 
-             
+         
+     
+
          //Desenho do fundo
          const fundo = blocofundopoco(size, 1, 0);
 
+       
+       
+        // eslint-disable-next-line no-loop-func
+        valorObservable.subscribe( () => {
 
-        const addSoma = new BehaviorSubject(label_od);
+            const od: number = validaPhase(phase, i-1, 'od');
+            var text_label_od_switch = labelOD(od);
 
-            // Subscreva-se ao BehaviorSubject para monitorar as mudanças no valor.
-        addSoma.subscribe((valor) => {
-            AppTextLoader(scene, valor, od_label_size, fundo , numPhases);
-         });
-
-         addSoma.next(label_od);
+            AppTextLoader(scene, text_label_od_switch, od_label_size, fundo , numPhases);
+        })
+       
  
- 
-         //Inserindo o label no poço
-         //AppTextLoader(scene, label_od, od_label_size, fundo , numPhases);
- 
+          
  
          //Parede cimentada inserida quando i = 1
          if(i === 1){
@@ -272,6 +275,8 @@ const CppSection2D = (props: Props) => {
          size -= pattern;
         
      }
+
+
      //Fim do loop for
      var lastfase = numPhases - altura; 
      var lastblock = blocofundopoco(size, 1, 0);
@@ -281,7 +286,9 @@ const CppSection2D = (props: Props) => {
      const last_od = validaPhase(phase, i-1, 'od');
      const last_label_od: string = labelOD( last_od ); 
    
-      
+     //enxerto
+ 
+
      AppTextLoader(scene, last_label_od, od_label_size, lastblock, numPhases );
      
      //Ultima parte
@@ -373,13 +380,18 @@ const CppSection2D = (props: Props) => {
    
     return (
     <div className={'sectbi '+ classmate }>     
-        <p>2D Status: {props.isActive2D ? 'Active' : 'Inactive'}</p>
+       
         <div>
-        {/**   
-         *  <span>Fases:  { JSON.stringify( phase )} </span> 
+        {
+          
+        /**   
+         * <p>2D Status: {props.isActive2D ? 'Active' : 'Inactive'}</p>
+         * <span>Fases:  { JSON.stringify( phase )} </span> 
           <span>Desvios: { JSON.stringify(desvio)} </span>
          * 
-         *  */ }
+         *  */ 
+         
+         }
          
           <div  ref={containerRef}  style={{ width: '100%', height: '80vh' }}></div>          
           
