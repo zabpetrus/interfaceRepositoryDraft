@@ -23,7 +23,6 @@ interface ToggleAction {
   type: typeof TOGGLE_2D | typeof TOGGLE_3D;
 }
 
-const seev = populatePhaseList( 3 );
 
 const initialState: AppState = {
   isActive2D: true,

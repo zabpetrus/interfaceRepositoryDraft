@@ -2,12 +2,9 @@ import { connect, useSelector } from 'react-redux';
 import { AppState } from '../../contexts/MainContext';
 import { useEffect, useRef } from 'react';
 import { THREE } from '../ThreeLibCallback';
-import { BehaviorSubject,  Observable,  Subject,  distinctUntilChanged, interval } from 'rxjs'
+import { BehaviorSubject,  distinctUntilChanged } from 'rxjs'
 import { createLineEarth, validaPhase, labelOD, blocofundopoco, cloneSimetricObject, lastFieldBuilder } from '../AppBlocks';
 import AppTextLoader from '../AppTextLoader';
-import { LineBasicMaterial } from 'three';
-import { FontLoader } from '../../three/examples/jsm/loaders/FontLoader';
-import { equal } from './../../three/examples/jsm/nodes/math/OperatorNode';
 
 interface Props {
     isActive2D: boolean;
@@ -221,23 +218,18 @@ const CppSection2D = (props: Props) => {
       
      //inicializando o contador
      var i: number = 1;
-     const loader = new FontLoader();
-  
+ 
 
      //Adicionando fases.
      for(i; i < numPhases; i++)
      {
          //O desenho da  da fase
          var tamanho = size;
-         
-         
-     
 
          //Desenho do fundo
          const fundo = blocofundopoco(size, 1, 0);
 
-       
-       
+              
         // eslint-disable-next-line no-loop-func
         valorObservable.subscribe( () => {
 
@@ -247,7 +239,6 @@ const CppSection2D = (props: Props) => {
             AppTextLoader(scene, text_label_od_switch, od_label_size, fundo , numPhases);
         })
        
- 
           
  
          //Parede cimentada inserida quando i = 1

@@ -158,8 +158,7 @@ export function createLineEarth( comp_linha_terra : number, alt_linha_terra: num
     const floor = [];
     floor.push( new THREE.Vector3( -comp_linha_terra, alt_linha_terra, 0 ) );
     floor.push( new THREE.Vector3( 0, alt_linha_terra, 0 ) );
-    floor.push( new THREE.Vector3( comp_linha_terra, alt_linha_terra, 0 ) );
-    
+    floor.push( new THREE.Vector3( comp_linha_terra, alt_linha_terra, 0 ) );    
 
 
     //A linha da terra
@@ -292,46 +291,5 @@ export const detourList = ( detourStructure : JSX.Element[], numDetours : number
       }
   }
 }
-
-
-const circles = (circleRadius: number) => {
-  var shape = new THREE.Shape();
-  shape.moveTo( circleRadius, 0 );
-  shape.absarc( 0, 0, circleRadius, 0, 2 * Math.PI, false );
-  return shape;
-}
-
-
-const createnewObject = ( numPhases: number ) => {
-
-  const dots = [];
-  for(var i = 0; i < numPhases; i++){ 
-      dots.push( new THREE.Vector3( 0, -i, 0 ) );
-  }
-
-  const randomSpline = new THREE.CatmullRomCurve3( dots );
-
-  const extrudeSettings = { 
-      steps: 200,
-      bevelEnabled: false,
-  extrudePath: randomSpline
-  };
-
-  const circleShape = circles( 0.1 );
-  const circleshapegeometry = new THREE.ExtrudeGeometry( circleShape, extrudeSettings );
-  const material1 = new THREE.MeshLambertMaterial( { color: 0xb00000, wireframe: false } );
-  const mesh = new THREE.Mesh( circleshapegeometry, material1 );
-  return mesh;
-
-
-}
-
-
-
-
-
-
-
-
 
 

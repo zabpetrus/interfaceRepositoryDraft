@@ -51,7 +51,6 @@ const AppFase = (props: Props) => {
 
 
     var isloaded = useSelector((state: AppState ) => state?.isloaded);
-    const currentState = useSelector((state: AppState) => state?.phase);
  
     const validaUpdateData: boolean = isloaded && (props.phaseData !== undefined);   
   
