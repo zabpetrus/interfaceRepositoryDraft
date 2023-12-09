@@ -1,13 +1,11 @@
 import { Desvios } from '../../types/_desvios';
 import { Fases } from '../../types/_fases';
-import { setODValue } from '../AppBlocks';
 import { THREE} from '../ThreeLibCallback';
 
 
 const CurvePoints3D = (numPhases : number, numDetours: number, phase:  Fases[], desvio: Desvios[]) => {
     const pontos: THREE.Vector3[] | undefined = [];
             
-    var j = 0;
     //Inicialmente numPhases = 3
     var i = 0;
     var x = 0, y = 0, z = 0;
@@ -19,14 +17,9 @@ const CurvePoints3D = (numPhases : number, numDetours: number, phase:  Fases[], 
 
         if( numDetours > 0){
 
-            var opt = 0.1;
-                if( phase[i] !== undefined){ opt = phase[i].od; }
-                 x +=  setODValue ( opt ) / 10 ;
-            if( i === j ){   
-               
-                j += 1;
-            }
-            pontos.push( new THREE.Vector3(x, y, z) );  
+            pontos.push( new THREE.Vector3(x, y, z) );
+            y -= 0.1;  
+            z += numDetours / 0.5;
                      
         } 
     }    

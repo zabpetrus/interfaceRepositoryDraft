@@ -1,8 +1,6 @@
 import { FontLoader } from '../../three/examples/jsm/loaders/FontLoader';
 import { LineBasicMaterial } from 'three/src/Three';
 import { THREE } from '../ThreeLibCallback';
-import { Observable } from 'rxjs';
-
 
 
 const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:number, parente: any, numPhases : number) => {
@@ -13,10 +11,9 @@ const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:numb
         const color = '#000000';
         const matDark = new LineBasicMaterial( {  color: color,  side: THREE.DoubleSide  } );
 
-        if(typeof(texto)== 'number'){
+        if(typeof(texto) == 'number'){
             texto = texto.toString();
         }
-
         
         const shapes = font.generateShapes( texto, tamanho);
         const geometry = new THREE.ShapeGeometry( shapes );
@@ -30,8 +27,13 @@ const AppTextLoader = (scene: THREE.Scene,  texto: string | number, tamanho:numb
         text.position.copy(posicaoDesejada);
 
         geometry.computeBoundingBox();
-        scene.add( text );
+        scene.traverse((child) => {
+            if (child instanceof THREE.Mesh && child.userData.isTextMesh) {
+              scene.remove(child);
+            }
+        });
 
+        scene.add( text );     
 
     },
     

@@ -2,7 +2,6 @@
 import { PayloadAction, configureStore } from '@reduxjs/toolkit';
 import { Fases } from '../../types/_fases';
 import { Desvios } from '../../types/_desvios';
-import { populatePhaseList } from '../../components/AppBlocks';
 
 
 const TOGGLE_2D = 'TOGGLE_2D';

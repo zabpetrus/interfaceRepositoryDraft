@@ -51,7 +51,8 @@ const AppFase = (props: Props) => {
 
 
     var isloaded = useSelector((state: AppState ) => state?.isloaded);
- 
+
+    
     const validaUpdateData: boolean = isloaded && (props.phaseData !== undefined);   
   
     const handleTipoChange = (event: any) => {
@@ -117,9 +118,8 @@ const AppFase = (props: Props) => {
 
     const checkout = (event: any) => {                    
         dispatch({ type: 'INCREMENT_BY_AMOUNT', payload: faseData });
-        console.log( "ID DE FASE "+ faseData.id );  
-        console.log( "FASE "+ JSON.stringify(faseData) );        
     }
+     
 
     return (
 

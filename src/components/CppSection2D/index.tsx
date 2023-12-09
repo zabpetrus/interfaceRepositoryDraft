@@ -42,7 +42,7 @@ const CppSection2D = (props: Props) => {
     const numero_de_fases = useSelector((state: AppState ) => state?.numPhases);
 
     //Mudança de tipo para iterar no loop. Garando que o numero de fases é um número, não outra coisa
-     var numPhases: number = 0;
+     var numPhases: number = 0; 
 
     (undefined !== numero_de_fases) ? (numPhases = numero_de_fases) : numPhases = 3;
       
@@ -200,8 +200,7 @@ const CppSection2D = (props: Props) => {
      const materialParedeGeometry = new THREE.MeshBasicMaterial( { color: 0xFFC926 } );
  
      //Figura renderizada
-     const parede = new THREE.Mesh( paredeGeometry, materialParedeGeometry );
- 
+     const parede = new THREE.Mesh( paredeGeometry, materialParedeGeometry ); 
  
      //parede cimentada - cor branca
      const paredeAlteradaGeometry =  new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
@@ -210,7 +209,7 @@ const CppSection2D = (props: Props) => {
      const paredealterada = new THREE.Mesh( paredeGeometry, paredeAlteradaGeometry);
  
     
-                     
+        
      //linha 
      const floorline = createLineEarth( comp_linha_terra, alt_linha_terra );
      objeto.add(floorline);                
@@ -227,15 +226,14 @@ const CppSection2D = (props: Props) => {
          var tamanho = size;
 
          //Desenho do fundo
-         const fundo = blocofundopoco(size, 1, 0);
 
-              
-        // eslint-disable-next-line no-loop-func
-        valorObservable.subscribe( () => {
 
-            const od: number = validaPhase(phase, i-1, 'od');
+        const fundo = blocofundopoco(size, 1, 0);
+
+        const od: number = validaPhase(phase, i-1, 'od');      
+        valorObservable.subscribe( (phase) => {
+            
             var text_label_od_switch = labelOD(od);
-
             AppTextLoader(scene, text_label_od_switch, od_label_size, fundo , numPhases);
         })
        
@@ -277,8 +275,7 @@ const CppSection2D = (props: Props) => {
      const last_od = validaPhase(phase, i-1, 'od');
      const last_label_od: string = labelOD( last_od ); 
    
-     //enxerto
- 
+
 
      AppTextLoader(scene, last_label_od, od_label_size, lastblock, numPhases );
      

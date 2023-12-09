@@ -18,7 +18,6 @@ export function blocofundopoco( largura: number, altura : number, offset : numbe
     const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     const backgroundpoco = new THREE.Mesh( geometry, material );
     return backgroundpoco;
-
 }
 
 
@@ -88,6 +87,8 @@ export function validaPhase(phases: Fases[] , index: number, key: string): numbe
 }
 
 
+
+
 /**
  * Converte o valor da entrada do OD em um texto
  * @param {number} phase_od_value 
@@ -124,7 +125,7 @@ export function labelOD( phase_od_value: number )
 
 
 
-export function setODValue( phase_od_value: number )
+export function appSetODValue( phase_od_value: number )
 {
     switch(phase_od_value){
         case 1:
@@ -147,9 +148,8 @@ export function setODValue( phase_od_value: number )
             return 22;
         case 10:
             return 30;
-
         default:
-            return 0.1;            
+            return 0.1; 
         
     }
 }

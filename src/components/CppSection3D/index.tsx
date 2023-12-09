@@ -36,7 +36,7 @@ const mapStateToProps = (state: any) => ({
  */
 const CppSection3D = (props: Props) => {
 
-    
+
     var phase = useSelector((state: AppState ) => state.phase);
     var desvio = useSelector((state: AppState ) => state.desvio);
 
@@ -189,9 +189,6 @@ const CppSection3D = (props: Props) => {
     }, [phase, desvio, valorObservable, numPhases, numDetours])
 
 
-
-
-    
 
     return (
         <div className={'secttri ' + classmate }>
