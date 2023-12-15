@@ -381,7 +381,7 @@ const CppSection2D = (props: Props) => {
          
          }
          
-          <div  ref={containerRef}  style={{ width: '100%', height: '80vh' }}></div>          
+          <div  ref={containerRef}  style={{ width: '100%', height: '100vh' }}></div>          
           
         </div>
     

@@ -17,7 +17,7 @@ const AppDesvio= (props: Props) => {
 
     const id_eventkey = `${ props.appdef } `;   
     //const item_id = `${initialFaseData.id}`;
-    const nomeDesvio = `Fase_${toRoman( id_obj )}`;
+    const nomeDesvio = `DESVIO_${toRoman( id_obj )}`;
 
     const dispatch = useDispatch()
   

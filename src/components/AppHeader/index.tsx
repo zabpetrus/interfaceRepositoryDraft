@@ -34,6 +34,15 @@ const AppHeader = (props: Props) => {
         handleLoadFile(event);
         props.toogleLoad();
     }
+
+    const handleRefreshPage = (event: any) => {
+        if (event) {
+            event.preventDefault();
+          }
+        
+          // Recarregar a página
+        window.location.reload();
+    }
     
   
     return (
@@ -57,13 +66,13 @@ const AppHeader = (props: Props) => {
                                 <a className="nav-link dropdown-toggle" href="#" id="arquivo" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Features</a>
                                 <ul className="dropdown-menu" aria-labelledby="arquivo">
                             
-                                    <li><a className="dropdown-item" href="#">Nova visualização</a></li>
-                                    <li><a className="dropdown-item" href="#" onClick={handleUploadFile}>Abrir Arquivo</a></li>
+                                    <li><a className="dropdown-item" href="#" onClick={handleRefreshPage}>Reset screen</a></li>
+                                    <li><a className="dropdown-item" href="#" onClick={handleUploadFile}>Open File</a></li>
                                 </ul>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                    Adicionar Parâmetros
+                                    Add parameters
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                             
@@ -71,7 +80,7 @@ const AppHeader = (props: Props) => {
                                     <li><a className="dropdown-item" href="#" onClick={handleIncrementoFases}>Add Phase</a></li>
                                     <li><a className="dropdown-item" href="#" onClick={handleIncrementoDesvios}>Add Detour</a></li>
                                     <li><hr className="dropdown-divider" /></li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                    <li><a className="dropdown-item" href="#">Add Theme</a></li>
                                 </ul>
 
                             </li>
